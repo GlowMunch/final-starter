@@ -97,4 +97,21 @@ describe "merchant coupons index" do
     expect(current_path).to eq(new_merchant_coupon_path(@merchant1))
     expect(page).to have_content("Too Many Active Coupons. Set Status to 'deactivated.'")
   end
+
+  it "can seperate activated and deactivated coupons on index page" do
+    within("#activated") do
+      expect(page).to have_content(@coupon1.name)
+      expect(page).to have_content(@coupon2.name)
+      expect(page).to have_content(@coupon3.name)
+      expect(page).to have_content(@coupon4.name)
+      expect(page).to_not have_content(@coupon5.name)
+    end
+    within("#deactivated") do
+    expect(page).to_not have_content(@coupon1.name)
+    expect(page).to_not have_content(@coupon2.name)
+    expect(page).to_not have_content(@coupon3.name)
+    expect(page).to_not have_content(@coupon4.name)
+    expect(page).to have_content(@coupon5.name)
+    end
+  end
 end
