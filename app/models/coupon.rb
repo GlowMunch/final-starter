@@ -14,7 +14,9 @@ class Coupon < ApplicationRecord
   def used_transactions
     self.invoices
     .joins(:transactions)
-    .where("transactions.result = 1")
+    # .where("transactions.result = 1") <-works
+    # .where(transactions: { result: 1 }) <-works
+    .where(transactions: { result: "success" })
     .count
   end
 

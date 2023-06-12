@@ -119,6 +119,5 @@ describe "merchant coupon show page" do
     expect(page).to have_content("Status: activated")
     expect(page).to_not have_button("Activate")
     visit merchant_coupons_path(@merchant1)
-    save_and_open_page
   end
 end
