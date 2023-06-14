@@ -3,12 +3,10 @@ class CouponsController < ApplicationController
   before_action :find_coupon, only: [:show, :edit, :get, :update]
 
   def index
+    @holidays = HolidayBuilder.get_next_holidays
   end
 
   def show
-  
-    # require 'pry'; binding.pry
-    # @invoice = Invoice.find(params[:id])
   end
 
   def new

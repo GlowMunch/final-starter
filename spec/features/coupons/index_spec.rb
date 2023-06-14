@@ -114,4 +114,11 @@ describe "merchant coupons index" do
     expect(page).to have_content(@coupon5.name)
     end
   end
+  it "shows holidays" do
+    expect(page).to have_content("Upcoming Holidays")
+    expect(page).to have_content("Juneteenth")
+    expect(page).to have_content("Independence Day")
+    expect(page).to have_content("Labor Day")
+    save_and_open_page
+  end
 end
