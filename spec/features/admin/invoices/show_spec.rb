@@ -79,7 +79,6 @@ describe "Admin Invoices Index Page" do
 
   it "shows subtotal for selected invoice" do
     visit admin_invoice_path(@i1)
-    save_and_open_page
     expect(page).to have_content("Subtotal: $#{@i1.total_revenue}")
     expect(@i1.coupon_discount).to eq("20%")
     expect(page).to have_content("Grand Total: 24.0")
