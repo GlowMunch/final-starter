@@ -12,8 +12,12 @@
         <%= f.submit 'Update Invoice' %>
     </section>
       <% end %>
-  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
-  <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %>
+
+    <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
+    <p>Subtotal: $<%= @invoice.total_revenue %></p>
+    <p>Grand Total: <%= @invoice.coupon_discount_applied %></p>
+    <p>Coupon Applied:<%= "#{@invoice.coupon_name}" %></p>
+
 
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
