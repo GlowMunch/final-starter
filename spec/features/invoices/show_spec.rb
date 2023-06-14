@@ -28,7 +28,7 @@ RSpec.describe "invoices show" do
     @customer_5 = Customer.create!(first_name: "Sylvester", last_name: "Nader")
     @customer_6 = Customer.create!(first_name: "Herber", last_name: "Kuhn")
 
-    @invoice_1 = Invoice.create!(customer_id: @customer_1.id, coupon_id: @coupon1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09", coupon_id: @coupon1.id)
     @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09")
     @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2)
     @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2)
@@ -65,7 +65,6 @@ RSpec.describe "invoices show" do
 
   it "shows the invoice information" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-
     expect(page).to have_content(@invoice_1.id)
     expect(page).to have_content(@invoice_1.status)
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
@@ -110,19 +109,14 @@ RSpec.describe "invoices show" do
     end
   end
 
-  # As a merchant
-  # When I visit one of my merchant invoice show pages
-  # I see the subtotal for my merchant from this invoice (that is, the total that does not include coupon discounts)
-  # And I see the grand total revenue after the discount was applied
-  # And I see the name and code of the coupon used as a link to that coupon's show page.
-
   it "shows subtotal for selected invoice" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
     expect(page).to have_content("Subtotal: #{@invoice_1.total_revenue}")
     expect(@invoice_1.coupon_discount).to eq("20%")
     expect(page).to have_content("Grand Total: 110.4")
     expect(page).to have_content(@invoice_1.coupon_name)
-    save_and_open_page
+    click_link("#{@invoice_1.coupon_name}")
+    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
   end
 
 end
