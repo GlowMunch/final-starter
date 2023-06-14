@@ -14,4 +14,48 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
+
+  def coupon_discount
+    if self.coupon_discount_type == "Percentage"
+      p "#{self.coupon_percent_discount_ammount}%"
+    else coupon_discount_type == "Dollar"
+      p "$#{self.coupon_dollar_discount_ammount}"
+    end
+  end
+
+  def coupon_name
+    if self.coupon != nil
+      self.coupon.name
+    else
+      nil
+    end
+  end
+
+  def coupon_discount_type
+    if self.coupon != nil
+      self.coupon.kind
+    else
+      nil
+    end
+  end
+
+  def coupon_dollar_discount_ammount
+    self.coupon.dollar_disc
+  end
+
+  def coupon_percent_discount_ammount
+    self.coupon.perc_disc
+  end
+
+  def coupon_discount_applied
+    if coupon_discount_type == "Percentage"
+      discount = self.coupon_percent_discount_ammount
+      percent_discount = 1 - ((discount.to_f)/100)
+      (self.total_revenue) * percent_discount
+    elsif coupon_discount_type == "Dollar"
+      (self.total_revenue) - (self.coupon_dollar_discount_ammount)
+    else
+      nil
+    end
+  end
 end
