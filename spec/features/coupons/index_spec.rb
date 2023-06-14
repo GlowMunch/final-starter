@@ -119,6 +119,5 @@ describe "merchant coupons index" do
     expect(page).to have_content("Juneteenth")
     expect(page).to have_content("Independence Day")
     expect(page).to have_content("Labor Day")
-    save_and_open_page
   end
 end
