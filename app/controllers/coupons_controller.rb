@@ -33,7 +33,7 @@ class CouponsController < ApplicationController
                         dollar_disc: params[:dollar_disc],
                         kind: params[:kind],
                         merchant: @merchant)
-    if @merchant.max_activated_coupons
+    if coupon.status == "activated" && @merchant.max_activated_coupons
       redirect_to new_merchant_coupon_path(@merchant)
       flash.notice = "Too Many Active Coupons. Set Status to 'deactivated.'"
     elsif coupon.save
