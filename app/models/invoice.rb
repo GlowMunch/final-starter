@@ -53,7 +53,12 @@ class Invoice < ApplicationRecord
       percent_discount = 1 - ((discount.to_f)/100)
       (self.total_revenue) * percent_discount
     elsif coupon_discount_type == "Dollar"
-      (total_revenue) - (coupon_dollar_discount_ammount)
+      dollar_discount = (total_revenue) - (coupon_dollar_discount_ammount)
+        if dollar_discount < 0
+          dollar_disccount = 0
+        else
+          dollar_disccount
+        end
     else
       nil
     end
