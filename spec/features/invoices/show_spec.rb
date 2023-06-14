@@ -118,5 +118,4 @@ RSpec.describe "invoices show" do
     click_link("#{@invoice_1.coupon_name}")
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
   end
-
 end
