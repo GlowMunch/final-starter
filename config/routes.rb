@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     resources :merchant_status, only: [:update]
     resources :invoices, except: [:new, :destroy]
   end
+  root "admin/merchants#index"
 end
